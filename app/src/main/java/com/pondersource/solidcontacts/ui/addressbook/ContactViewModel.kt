@@ -24,11 +24,25 @@ class ContactViewModel @Inject constructor(
     val loadingContactDetails = mutableStateOf(true)
     val contactDetails: MutableState<FullContact?> = mutableStateOf(null)
 
-    init {
+    val deleteLoading = mutableStateOf(false)
+    val deleteContactResult = mutableStateOf(false)
+
+    fun loadData() {
         viewModelScope.launch {
             loadingContactDetails.value = true
             contactDetails.value = contactsRepository.getContact(contactRoute.contactUri)
             loadingContactDetails.value = false
+        }
+    }
+
+    fun deleteContact() {
+        viewModelScope.launch {
+            deleteLoading.value = true
+            val result = contactsRepository.deleteContact(contactRoute.addressBookUri, contactDetails.value!!.uri)
+            if (result != null) {
+                deleteContactResult.value = true
+            }
+            deleteLoading.value = true
         }
     }
 

@@ -8,6 +8,7 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import com.pondersource.solidcontacts.R
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -83,40 +87,66 @@ fun AddressBook(
         viewModel.loadData()
     }
 
-    Scaffold (
-        modifier = Modifier
-            .fillMaxWidth(),
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(viewModel.addressBookRoute.name) }
-            )
-        },
-        floatingActionButton = {
-            if (viewModel.addressBookDetails.value != null) {
-                AddContactAndGroupFab(
-                    fabItems,
-                ) {
-                    if (it == fabItems[0]) {
-                        navController.navigate(AddContactRoute(viewModel.addressBookDetails.value!!.uri))
+    LaunchedEffect(viewModel.deleteAddressBookResult.value) {
+        if (viewModel.deleteAddressBookResult.value) {
+            innerNavController.popBackStack()
+        }
+    }
 
-                    } else if (it == fabItems[1]) {
-                        navController.navigate(AddGroupRoute(viewModel.addressBookDetails.value!!.uri))
+    if (viewModel.loadingAddressBookDetails.value || viewModel.deleteLoading.value) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            LoadingItem("Loading address book details...")
+        }
+    } else {
+        Scaffold(
+            modifier = Modifier
+                .fillMaxWidth(),
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = { Text(viewModel.addressBookRoute.name) },
+                    navigationIcon = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable { innerNavController.popBackStack() }
+                                .padding(12.dp)
+                        )
+                    },
+                    actions = {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable {
+                                    viewModel.deleteAddressBook()
+                                }
+                                .padding(12.dp),
+                            tint = Color.Red
+                        )
+                    }
+                )
+            },
+            floatingActionButton = {
+                if (viewModel.addressBookDetails.value != null) {
+                    AddContactAndGroupFab(
+                        fabItems,
+                    ) {
+                        if (it == fabItems[0]) {
+                            navController.navigate(AddContactRoute(viewModel.addressBookDetails.value!!.uri))
+
+                        } else if (it == fabItems[1]) {
+                            navController.navigate(AddGroupRoute(viewModel.addressBookDetails.value!!.uri))
+                        }
                     }
                 }
             }
-        }
-    ){ paddings ->
-        if (viewModel.loadingAddressBookDetails.value) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddings),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                LoadingItem("Loading address book details...")
-            }
-        } else {
+        ) { paddings ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -174,13 +204,20 @@ fun AddressBook(
                                 viewModel.addressBookDetails.value!!.contacts,
                                 "You don't have any contact in this address book."
                             ) {
-                                innerNavController.navigate(ContactRoute(it.uri))
+                                innerNavController.navigate(ContactRoute(viewModel.addressBookRoute.addressBookUri, it.uri))
                             }
                         }
 
                         1 -> {
-                            GroupList(viewModel.addressBookDetails.value!!.groups) {
-                                innerNavController.navigate(GroupRoute(it.uri))
+                            GroupList(
+                                viewModel.addressBookDetails.value!!.groups,
+                            ) {
+                                innerNavController.navigate(
+                                    GroupRoute(
+                                        viewModel.addressBookDetails.value!!.uri,
+                                        it.uri
+                                    )
+                                )
                             }
                         }
                     }
@@ -190,7 +227,9 @@ fun AddressBook(
     }
 
     BackHandler() {
-        innerNavController.popBackStack()
+        if (!viewModel.deleteLoading.value) {
+            innerNavController.popBackStack()
+        }
     }
 }
 

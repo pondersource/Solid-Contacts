@@ -13,6 +13,8 @@ interface ContactsRepository {
 
     suspend fun getAddressBook(addressBookUri: String): AddressBook?
 
+    suspend fun deleteAddressBook(addressBookUri: String): AddressBook?
+
     suspend fun getContact(contactUri: String): FullContact?
 
     suspend fun createContact(
@@ -23,6 +25,11 @@ interface ContactsRepository {
         groups: List<String>
     ): FullContact?
 
+    suspend fun deleteContact(
+        addressBookUri: String,
+        contactUri: String,
+    ): FullContact?
+
     suspend fun createGroup(
         addressBookUri: String,
         title: String,
@@ -31,4 +38,8 @@ interface ContactsRepository {
 
     suspend fun getGroup(groupUri: String): FullGroup?
 
+    suspend fun deleteGroup(
+        addressBookUri: String,
+        groupUri: String,
+    ): FullGroup?
 }

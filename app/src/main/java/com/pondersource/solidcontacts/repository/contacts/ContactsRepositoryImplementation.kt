@@ -1,5 +1,6 @@
 package com.pondersource.solidcontacts.repository.contacts
 
+import android.util.Log
 import com.pondersource.shared.data.datamodule.contact.AddressBook
 import com.pondersource.shared.data.datamodule.contact.AddressBookList
 import com.pondersource.shared.data.datamodule.contact.FullContact
@@ -11,7 +12,12 @@ class ContactsRepositoryImplementation (
     private val contactDataModule: SolidContactsDataModule,
 ): ContactsRepository {
     override suspend fun getAddressBooks(): AddressBookList? {
-        return contactDataModule.getAddressBooks()
+        try {
+            return contactDataModule.getAddressBooks()
+        } catch (e: Exception) {
+            Log.d("TAG", "service is not connected")
+            return null
+        }
     }
 
     override suspend fun createNewAddressBook(name: String, isPrivate: Boolean): AddressBook? {
@@ -25,6 +31,10 @@ class ContactsRepositoryImplementation (
         return contactDataModule.getAddressBook(addressBookUri)
     }
 
+    override suspend fun deleteAddressBook(addressBookUri: String): AddressBook? {
+        return contactDataModule.deleteAddressBook(addressBookUri)
+    }
+
     override suspend fun getContact(contactUri: String): FullContact? {
         return contactDataModule.getContact(contactUri)
     }
@@ -32,6 +42,10 @@ class ContactsRepositoryImplementation (
     override suspend fun createContact(addressBookUri: String, name: String, email: String, phone: String, groups: List<String>): FullContact? {
         val newContact = NewContact(name, email, phone)
         return contactDataModule.createNewContact(addressBookUri, newContact, groups)
+    }
+
+    override suspend fun deleteContact(addressBookUri: String, contactUri: String): FullContact? {
+        return contactDataModule.deleteContact(addressBookUri, contactUri)
     }
 
     override suspend fun createGroup(
@@ -48,5 +62,9 @@ class ContactsRepositoryImplementation (
 
     override suspend fun getGroup(groupUri: String): FullGroup? {
         return contactDataModule.getGroup(groupUri)
+    }
+
+    override suspend fun deleteGroup(addressBookUri: String, groupUri: String): FullGroup? {
+        return contactDataModule.deleteGroup(addressBookUri, groupUri)
     }
 }

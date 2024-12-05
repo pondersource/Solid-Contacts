@@ -24,11 +24,25 @@ class AddressBookViewModel @Inject constructor(
     val loadingAddressBookDetails = mutableStateOf(true)
     val addressBookDetails: MutableState<AddressBook?> = mutableStateOf(null)
 
+    val deleteLoading = mutableStateOf(false)
+    val deleteAddressBookResult = mutableStateOf(false)
+
     fun loadData() {
         viewModelScope.launch {
             loadingAddressBookDetails.value = true
             addressBookDetails.value = contactsRepository.getAddressBook(addressBookRoute.addressBookUri)
             loadingAddressBookDetails.value = false
+        }
+    }
+
+    fun deleteAddressBook() {
+        viewModelScope.launch {
+            deleteLoading.value = true
+            val result = contactsRepository.deleteAddressBook(addressBookRoute.addressBookUri)
+            if (result != null) {
+                deleteAddressBookResult.value = true
+            }
+            deleteLoading.value = false
         }
     }
 }

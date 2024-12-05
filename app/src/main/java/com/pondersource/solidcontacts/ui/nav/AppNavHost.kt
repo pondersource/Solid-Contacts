@@ -71,12 +71,14 @@ data class AddressBookRoute(
 )
 
 @Serializable
-data class ContactRoute(
+data class ContactRoute (
+    val addressBookUri: String,
     val contactUri: String
 )
 
 @Serializable
 data class GroupRoute (
+    val addressBookUri: String,
     val groupUri: String
 )
 
