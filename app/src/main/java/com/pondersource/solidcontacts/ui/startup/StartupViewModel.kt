@@ -19,7 +19,7 @@ class StartupViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            delay(200L)
+            delay(1000L)
             signInState.value = hasLoggedIn()
         }
     }

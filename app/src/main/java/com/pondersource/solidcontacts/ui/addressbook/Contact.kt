@@ -1,6 +1,8 @@
 package com.pondersource.solidcontacts.ui.addressbook
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,7 +36,15 @@ fun Contact(
     ){ paddings ->
 
         if(viewModel.loadingContactDetails.value) {
-            LoadingItem("Loading contact details...")
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddings),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                LoadingItem("Loading contact details...")
+            }
         } else {
             LazyColumn(
                 modifier = Modifier

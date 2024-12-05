@@ -32,7 +32,6 @@ import com.pondersource.solidcontacts.ui.addressbook.Contact
 import com.pondersource.solidcontacts.ui.addressbook.ContactViewModel
 import com.pondersource.solidcontacts.ui.addressbook.Group
 import com.pondersource.solidcontacts.ui.addressbook.GroupViewModel
-import com.pondersource.solidcontacts.ui.nav.AddressBookGraph
 import com.pondersource.solidcontacts.ui.nav.AddressBookRoute
 import com.pondersource.solidcontacts.ui.nav.AddressBooksRoute
 import com.pondersource.solidcontacts.ui.nav.ContactRoute
@@ -69,6 +68,7 @@ fun MainPage(
     }
 
     Scaffold (
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by nestedNavController.currentBackStackEntryAsState()
@@ -102,13 +102,10 @@ fun MainPage(
                 NavHost(
                     navController = addressBookInnerNavController,
                     startDestination = AddressBooksRoute,
-                    modifier = Modifier
-                        .systemBarsPadding()
-                        .fillMaxSize()
-                        .padding(paddingValues),
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                     composable<AddressBooksRoute> { AddressBooks(navController, addressBookInnerNavController, hiltViewModel<AddressBooksViewModel>()) }
-                    composable<AddressBookRoute> { AddressBook(addressBookInnerNavController, hiltViewModel<AddressBookViewModel>()) }
+                    composable<AddressBookRoute> { AddressBook(navController, addressBookInnerNavController, hiltViewModel<AddressBookViewModel>()) }
                     composable<ContactRoute> { Contact(addressBookInnerNavController, hiltViewModel<ContactViewModel>()) }
                     composable<GroupRoute> { Group(addressBookInnerNavController, hiltViewModel<GroupViewModel>()) }
                 }

@@ -20,25 +20,39 @@ class AddressBooksViewModel @Inject constructor(
     val privateAddressBooks : MutableState<List<AddressBook>?> = mutableStateOf(null)
     val publicAddressBooks : MutableState<List<AddressBook>?> = mutableStateOf(null)
 
+    val newAddressBookTitle = mutableStateOf("")
+    val newAddressBookPrivate = mutableStateOf(true)
 
-    init {
+
+    fun loadData() {
+        getAddressBooks()
+    }
+
+    fun createNewAddressBook() {
+
         viewModelScope.launch(Dispatchers.IO) {
+            addressBooksLoadingState.value = true
+            contactsRepository.createNewAddressBook(newAddressBookTitle.value, newAddressBookPrivate.value)
             getAddressBooks()
         }
     }
-    private suspend fun getAddressBooks() {
-        addressBooksLoadingState.value = true
-        val addressBooks = contactsRepository.getAddressBooks()
-        val localPrivateAddressBookList = arrayListOf<AddressBook>()
-        val localPublicAddressBookList = arrayListOf<AddressBook>()
-        addressBooks?.privateAddressBookUris?.forEach {
-            localPrivateAddressBookList.add(contactsRepository.getAddressBook(it)!!)
+
+
+    private fun getAddressBooks() {
+        viewModelScope.launch {
+            addressBooksLoadingState.value = true
+            val addressBooks = contactsRepository.getAddressBooks()
+            val localPrivateAddressBookList = arrayListOf<AddressBook>()
+            val localPublicAddressBookList = arrayListOf<AddressBook>()
+            addressBooks?.privateAddressBookUris?.forEach {
+                localPrivateAddressBookList.add(contactsRepository.getAddressBook(it)!!)
+            }
+            addressBooks?.publicAddressBookUris?.forEach {
+                localPublicAddressBookList.add(contactsRepository.getAddressBook(it)!!)
+            }
+            privateAddressBooks.value = localPrivateAddressBookList
+            publicAddressBooks.value = localPublicAddressBookList
+            addressBooksLoadingState.value = false
         }
-        addressBooks?.publicAddressBookUris?.forEach {
-            localPublicAddressBookList.add(contactsRepository.getAddressBook(it)!!)
-        }
-        this.privateAddressBooks.value = localPrivateAddressBookList
-        this.publicAddressBooks.value = localPublicAddressBookList
-        addressBooksLoadingState.value = false
     }
 }

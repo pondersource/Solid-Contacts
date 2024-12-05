@@ -7,12 +7,28 @@ import com.pondersource.shared.data.datamodule.contact.FullGroup
 
 interface ContactsRepository {
 
-    fun getAddressBooks(): AddressBookList?
+    suspend fun getAddressBooks(): AddressBookList?
 
-    fun getAddressBook(addressBookUri: String): AddressBook?
+    suspend fun createNewAddressBook(name: String, isPrivate: Boolean = true): AddressBook?
 
-    fun getContact(contactUri: String): FullContact?
+    suspend fun getAddressBook(addressBookUri: String): AddressBook?
 
-    fun getGroup(groupUri: String): FullGroup?
+    suspend fun getContact(contactUri: String): FullContact?
+
+    suspend fun createContact(
+        addressBookUri: String,
+        name: String,
+        email: String,
+        phone: String,
+        groups: List<String>
+    ): FullContact?
+
+    suspend fun createGroup(
+        addressBookUri: String,
+        title: String,
+        contacts: List<String>
+    ): FullGroup?
+
+    suspend fun getGroup(groupUri: String): FullGroup?
 
 }

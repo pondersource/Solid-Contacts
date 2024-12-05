@@ -24,7 +24,7 @@ class AddressBookViewModel @Inject constructor(
     val loadingAddressBookDetails = mutableStateOf(true)
     val addressBookDetails: MutableState<AddressBook?> = mutableStateOf(null)
 
-    init {
+    fun loadData() {
         viewModelScope.launch {
             loadingAddressBookDetails.value = true
             addressBookDetails.value = contactsRepository.getAddressBook(addressBookRoute.addressBookUri)
