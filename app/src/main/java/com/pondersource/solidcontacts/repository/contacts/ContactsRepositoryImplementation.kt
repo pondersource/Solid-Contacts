@@ -7,10 +7,16 @@ import com.pondersource.shared.data.datamodule.contact.FullContact
 import com.pondersource.shared.data.datamodule.contact.FullGroup
 import com.pondersource.shared.data.datamodule.contact.NewContact
 import com.pondersource.solidandroidclient.sdk.SolidContactsDataModule
+import kotlinx.coroutines.flow.Flow
 
 class ContactsRepositoryImplementation (
     private val contactDataModule: SolidContactsDataModule,
 ): ContactsRepository {
+
+    override fun contactsServiceConnectionState(): Flow<Boolean> {
+        return contactDataModule.contactsDataModuleServiceConnectionState()
+    }
+
     override suspend fun getAddressBooks(): AddressBookList? {
         try {
             return contactDataModule.getAddressBooks()

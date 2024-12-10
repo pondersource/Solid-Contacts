@@ -4,8 +4,11 @@ import com.pondersource.shared.data.datamodule.contact.AddressBook
 import com.pondersource.shared.data.datamodule.contact.AddressBookList
 import com.pondersource.shared.data.datamodule.contact.FullContact
 import com.pondersource.shared.data.datamodule.contact.FullGroup
+import kotlinx.coroutines.flow.Flow
 
 interface ContactsRepository {
+
+    fun contactsServiceConnectionState(): Flow<Boolean>
 
     suspend fun getAddressBooks(): AddressBookList?
 

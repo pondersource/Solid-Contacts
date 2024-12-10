@@ -24,8 +24,15 @@ class AddressBooksViewModel @Inject constructor(
     val newAddressBookPrivate = mutableStateOf(true)
 
 
+
     fun loadData() {
-        getAddressBooks()
+        viewModelScope.launch {
+            contactsRepository.contactsServiceConnectionState().collect {
+                if (it) {
+                    getAddressBooks()
+                }
+            }
+        }
     }
 
     fun createNewAddressBook() {
@@ -38,21 +45,19 @@ class AddressBooksViewModel @Inject constructor(
     }
 
 
-    private fun getAddressBooks() {
-        viewModelScope.launch {
-            addressBooksLoadingState.value = true
-            val addressBooks = contactsRepository.getAddressBooks()
-            val localPrivateAddressBookList = arrayListOf<AddressBook>()
-            val localPublicAddressBookList = arrayListOf<AddressBook>()
-            addressBooks?.privateAddressBookUris?.forEach {
-                localPrivateAddressBookList.add(contactsRepository.getAddressBook(it)!!)
-            }
-            addressBooks?.publicAddressBookUris?.forEach {
-                localPublicAddressBookList.add(contactsRepository.getAddressBook(it)!!)
-            }
-            privateAddressBooks.value = localPrivateAddressBookList
-            publicAddressBooks.value = localPublicAddressBookList
-            addressBooksLoadingState.value = false
+    private suspend fun getAddressBooks() {
+        addressBooksLoadingState.value = true
+        val addressBooks = contactsRepository.getAddressBooks()
+        val localPrivateAddressBookList = arrayListOf<AddressBook>()
+        val localPublicAddressBookList = arrayListOf<AddressBook>()
+        addressBooks?.privateAddressBookUris?.forEach {
+            localPrivateAddressBookList.add(contactsRepository.getAddressBook(it)!!)
         }
+        addressBooks?.publicAddressBookUris?.forEach {
+            localPublicAddressBookList.add(contactsRepository.getAddressBook(it)!!)
+        }
+        privateAddressBooks.value = localPrivateAddressBookList
+        publicAddressBooks.value = localPublicAddressBookList
+        addressBooksLoadingState.value = false
     }
 }

@@ -19,8 +19,14 @@ class StartupViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            delay(1000L)
-            signInState.value = hasLoggedIn()
+            solidSignInClient.authServiceConnectionState().collect {
+                if(it) {
+                    //Has connected
+                    signInState.value = hasLoggedIn()
+                } else {
+                    //not connected yet
+                }
+            }
         }
     }
 
