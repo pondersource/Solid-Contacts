@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -37,6 +38,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -53,6 +55,8 @@ import androidx.navigation.NavController
 import com.pondersource.shared.data.datamodule.contact.Contact
 import com.pondersource.shared.data.datamodule.contact.Group
 import com.pondersource.solidcontacts.ui.element.ContactItem
+import com.pondersource.solidcontacts.ui.element.DeleteDialog
+import com.pondersource.solidcontacts.ui.element.DeleteElementType
 import com.pondersource.solidcontacts.ui.element.GroupItem
 import com.pondersource.solidcontacts.ui.element.LoadingItem
 import com.pondersource.solidcontacts.ui.nav.AddContactRoute
@@ -77,6 +81,8 @@ fun AddressBook(
         )
     }
     var pagerState = rememberPagerState { 2 }
+
+    val showDeleteDialog = remember { mutableStateOf(false) }
 
     val fabItems = arrayListOf<AddItem>(
         AddItem(R.drawable.ic_contact, "Add Contact"),
@@ -124,7 +130,7 @@ fun AddressBook(
                             contentDescription = null,
                             modifier = Modifier
                                 .clickable {
-                                    viewModel.deleteAddressBook()
+                                    showDeleteDialog.value = true
                                 }
                                 .padding(12.dp),
                             tint = Color.Red
@@ -222,6 +228,20 @@ fun AddressBook(
                         }
                     }
                 }
+            }
+        }
+
+        when {
+            showDeleteDialog.value -> {
+                DeleteDialog(
+                    onDismissRequest = {
+                        showDeleteDialog.value = false
+                    },
+                    onDelete = {
+                        viewModel.deleteAddressBook()
+                    },
+                    type = DeleteElementType.ADDRESS_BOOK
+                )
             }
         }
     }

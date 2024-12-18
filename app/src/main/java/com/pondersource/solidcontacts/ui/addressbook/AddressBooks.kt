@@ -1,5 +1,6 @@
 package com.pondersource.solidcontacts.ui.addressbook
 
+import android.widget.Space
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,9 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -32,7 +36,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
@@ -181,15 +187,32 @@ fun AddressBooks(
                 Dialog(
                     onDismissRequest = dismissAddAddressBookDialog
                 ) {
-                    Card {
+                    Card(
+                        modifier = Modifier
+                            .widthIn(min = 200.dp)
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            "Create new Address Book",
+                            modifier = Modifier.padding(12.dp)
+                        )
                         OutlinedTextField(
                             value = viewModel.newAddressBookTitle.value,
                             onValueChange = {
                                 viewModel.newAddressBookTitle.value = it
-                            }
+                            },
+                            modifier = Modifier.padding(12.dp),
+                            label = {
+                                Text("Title")
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                         )
 
-                        Row(){
+                        Row(
+                            Modifier.padding(12.dp, 4.dp),
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ){
                             Checkbox(
                                 checked = viewModel.newAddressBookPrivate.value,
                                 onCheckedChange = {
@@ -199,13 +222,21 @@ fun AddressBooks(
                             Text("Private")
                         }
 
-                        Button(
-                            onClick = {
-                                viewModel.createNewAddressBook()
-                                addAddressBookDialogState.value = false
-                            }
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Text("Create")
+                            Button(
+                                onClick = {
+                                    viewModel.createNewAddressBook()
+                                    addAddressBookDialogState.value = false
+                                }
+                            ) {
+                                Text("Create")
+                            }
                         }
                     }
                 }

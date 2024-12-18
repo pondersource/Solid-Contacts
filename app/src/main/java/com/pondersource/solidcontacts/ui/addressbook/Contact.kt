@@ -19,11 +19,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.pondersource.solidcontacts.ui.element.DeleteDialog
+import com.pondersource.solidcontacts.ui.element.DeleteElementType
 import com.pondersource.solidcontacts.ui.element.LoadingItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,6 +46,8 @@ fun Contact(
             innerNavController.popBackStack()
         }
     }
+
+    val showDeleteDialog = remember { mutableStateOf(false) }
 
 
     if(viewModel.loadingContactDetails.value || viewModel.deleteLoading.value) {
@@ -75,7 +81,7 @@ fun Contact(
                             contentDescription = null,
                             modifier = Modifier
                                 .clickable {
-                                    viewModel.deleteContact()
+                                    showDeleteDialog.value = true
                                 }
                                 .padding(12.dp),
                             tint = Color.Red
@@ -111,6 +117,20 @@ fun Contact(
                         Text(it.value)
                     }
                 }
+            }
+        }
+
+        when {
+            showDeleteDialog.value -> {
+                DeleteDialog(
+                    onDismissRequest = {
+                        showDeleteDialog.value = false
+                    },
+                    onDelete = {
+                        viewModel.deleteContact()
+                    },
+                    type = DeleteElementType.CONTACT
+                )
             }
         }
     }
