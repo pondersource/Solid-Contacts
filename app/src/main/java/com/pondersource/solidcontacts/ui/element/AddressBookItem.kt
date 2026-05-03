@@ -23,7 +23,7 @@ fun AddressBookItem(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
-            .clickable{onClick(addressBook)},
+            .clickable { onClick(addressBook) },
     ) {
         Box(
             modifier = Modifier

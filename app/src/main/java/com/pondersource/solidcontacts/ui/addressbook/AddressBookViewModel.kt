@@ -17,7 +17,7 @@ import javax.inject.Inject
 class AddressBookViewModel @Inject constructor(
     val contactsRepository: ContactsRepository,
     val savedStateHandle: SavedStateHandle,
-): ViewModel() {
+) : ViewModel() {
 
     val addressBookRoute = savedStateHandle.toRoute<AddressBookRoute>()
 
@@ -30,7 +30,8 @@ class AddressBookViewModel @Inject constructor(
     fun loadData() {
         viewModelScope.launch {
             loadingAddressBookDetails.value = true
-            addressBookDetails.value = contactsRepository.getAddressBook(addressBookRoute.addressBookUri)
+            addressBookDetails.value =
+                contactsRepository.getAddressBook(addressBookRoute.addressBookUri)
             loadingAddressBookDetails.value = false
         }
     }

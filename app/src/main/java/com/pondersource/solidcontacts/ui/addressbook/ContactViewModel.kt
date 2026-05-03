@@ -17,7 +17,7 @@ import javax.inject.Inject
 class ContactViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val contactsRepository: ContactsRepository
-): ViewModel() {
+) : ViewModel() {
 
     val contactRoute = savedStateHandle.toRoute<ContactRoute>()
 
@@ -38,7 +38,10 @@ class ContactViewModel @Inject constructor(
     fun deleteContact() {
         viewModelScope.launch {
             deleteLoading.value = true
-            val result = contactsRepository.deleteContact(contactRoute.addressBookUri, contactDetails.value!!.uri)
+            val result = contactsRepository.deleteContact(
+                contactRoute.addressBookUri,
+                contactDetails.value!!.uri
+            )
             if (result != null) {
                 deleteContactResult.value = true
             }

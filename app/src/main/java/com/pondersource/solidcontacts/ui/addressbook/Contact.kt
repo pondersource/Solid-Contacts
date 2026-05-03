@@ -50,7 +50,7 @@ fun Contact(
     val showDeleteDialog = remember { mutableStateOf(false) }
 
 
-    if(viewModel.loadingContactDetails.value || viewModel.deleteLoading.value) {
+    if (viewModel.loadingContactDetails.value || viewModel.deleteLoading.value) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),

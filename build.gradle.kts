@@ -19,6 +19,6 @@ plugins {
     alias(libs.plugins.google.hilt.android) apply false
 }
 
-tasks.register("clean", Delete::class){
+tasks.register("clean", Delete::class) {
     delete(project.layout.buildDirectory)
 }

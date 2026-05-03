@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.pondersource.solidandroidclient.ui.SignInButton
 import com.pondersource.solidcontacts.ui.nav.MainPage
@@ -26,7 +25,7 @@ fun Login(
     val snackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(viewModel.loginResult.value) {
-        if(viewModel.loginResult.value == true) {
+        if (viewModel.loginResult.value == true) {
             navController.navigate(MainPage) {
                 popUpTo(MainPage) {
                     inclusive = true
@@ -36,7 +35,7 @@ fun Login(
     }
 
     LaunchedEffect(viewModel.loginError.value) {
-        if(viewModel.loginError.value.isNotEmpty()) {
+        if (viewModel.loginError.value.isNotEmpty()) {
             snackBarHostState.showSnackbar(viewModel.loginError.value)
         }
     }

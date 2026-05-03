@@ -1,6 +1,5 @@
 package com.pondersource.solidcontacts.ui.addressbook
 
-import android.widget.Space
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
@@ -36,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -75,7 +72,7 @@ fun AddressBooks(
         viewModel.loadData()
     }
 
-    Scaffold (
+    Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CenterAlignedTopAppBar(
@@ -94,7 +91,7 @@ fun AddressBooks(
                 )
             }
         }
-    ){ paddings ->
+    ) { paddings ->
 
         if (viewModel.addressBooksLoadingState.value) {
             Column(
@@ -212,7 +209,7 @@ fun AddressBooks(
                             Modifier.padding(12.dp, 4.dp),
                             horizontalArrangement = Arrangement.Start,
                             verticalAlignment = Alignment.CenterVertically,
-                        ){
+                        ) {
                             Checkbox(
                                 checked = viewModel.newAddressBookPrivate.value,
                                 onCheckedChange = {

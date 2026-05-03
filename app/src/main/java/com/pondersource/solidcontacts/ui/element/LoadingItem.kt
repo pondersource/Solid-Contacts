@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 fun LoadingItem(
     message: String,
 ) {
-    Column (
+    Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

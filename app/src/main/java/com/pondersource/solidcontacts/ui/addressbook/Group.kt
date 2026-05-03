@@ -48,7 +48,7 @@ fun Group(
 
     val showDeleteDialog = remember { mutableStateOf(false) }
 
-    if(viewModel.loadingGroupDetails.value || viewModel.deleteLoading.value) {
+    if (viewModel.loadingGroupDetails.value || viewModel.deleteLoading.value) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -106,7 +106,12 @@ fun Group(
                     viewModel.groupDetails.value!!.contacts,
                     "You don't have any contact in this group"
                 ) {
-                    innerNavController.navigate(ContactRoute(viewModel.groupRoute.addressBookUri, it.uri))
+                    innerNavController.navigate(
+                        ContactRoute(
+                            viewModel.groupRoute.addressBookUri,
+                            it.uri
+                        )
+                    )
                 }
             }
         }
@@ -127,7 +132,7 @@ fun Group(
     }
 
     BackHandler() {
-        if(!viewModel.deleteLoading.value) {
+        if (!viewModel.deleteLoading.value) {
             innerNavController.popBackStack()
         }
     }

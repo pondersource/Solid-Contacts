@@ -4,9 +4,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.pondersource.solidcontacts.ui.login.Login
 import com.pondersource.solidcontacts.ui.login.LoginViewModel
@@ -25,7 +25,7 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
 ) {
-    NavHost (
+    NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = Startup
@@ -33,8 +33,18 @@ fun AppNavHost(
         composable<Startup> { Startup(navController, hiltViewModel<StartupViewModel>()) }
         composable<Login> { Login(navController, hiltViewModel<LoginViewModel>()) }
         composable<MainPage> { MainPage(navController, hiltViewModel<MainPageViewModel>()) }
-        composable<AddContactRoute> { AddNewContact(navController, hiltViewModel<AddNewContactViewModel>()) }
-        composable<AddGroupRoute> { AddNewGroup(navController, hiltViewModel<AddNewGroupViewModel>()) }
+        composable<AddContactRoute> {
+            AddNewContact(
+                navController,
+                hiltViewModel<AddNewContactViewModel>()
+            )
+        }
+        composable<AddGroupRoute> {
+            AddNewGroup(
+                navController,
+                hiltViewModel<AddNewGroupViewModel>()
+            )
+        }
     }
 }
 
@@ -48,7 +58,7 @@ object Login
 object MainPage {
 
     @Serializable
-    data class MainNavBottomItem<T: Any>(
+    data class MainNavBottomItem<T : Any>(
         @StringRes val title: Int,
         @DrawableRes val icon: Int,
         val route: T,
@@ -71,13 +81,13 @@ data class AddressBookRoute(
 )
 
 @Serializable
-data class ContactRoute (
+data class ContactRoute(
     val addressBookUri: String,
     val contactUri: String
 )
 
 @Serializable
-data class GroupRoute (
+data class GroupRoute(
     val addressBookUri: String,
     val groupUri: String
 )

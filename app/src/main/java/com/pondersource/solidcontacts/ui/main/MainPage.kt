@@ -1,6 +1,5 @@
 package com.pondersource.solidcontacts.ui.main
 
-import com.pondersource.solidcontacts.R
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -15,7 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -24,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.pondersource.solidcontacts.R
 import com.pondersource.solidcontacts.ui.addressbook.AddressBook
 import com.pondersource.solidcontacts.ui.addressbook.AddressBookViewModel
 import com.pondersource.solidcontacts.ui.addressbook.AddressBooks
@@ -50,13 +50,17 @@ fun MainPage(
     val addressBookInnerNavController = rememberNavController()
 
     val bottomItems = remember {
-        listOf (
+        listOf(
             MainNavBottomItem<MainPage.Home>(R.string.home, R.drawable.ic_home, MainPage.Home),
-            MainNavBottomItem<MainPage.Setting>(R.string.setting, R.drawable.ic_setting, MainPage.Setting),
+            MainNavBottomItem<MainPage.Setting>(
+                R.string.setting,
+                R.drawable.ic_setting,
+                MainPage.Setting
+            ),
         )
     }
 
-    val changeTab : (T: Any) -> Unit = { tabRoute ->
+    val changeTab: (T: Any) -> Unit = { tabRoute ->
         nestedNavController.navigate(tabRoute) {
 
             popUpTo(nestedNavController.graph.findStartDestination().id) {
@@ -67,7 +71,7 @@ fun MainPage(
         }
     }
 
-    Scaffold (
+    Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             NavigationBar {
@@ -85,7 +89,7 @@ fun MainPage(
                 }
             }
         }
-    ){ paddingValues ->
+    ) { paddingValues ->
         NavHost(
             navController = nestedNavController,
             startDestination = MainPage.Home,
@@ -104,10 +108,32 @@ fun MainPage(
                     startDestination = AddressBooksRoute,
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    composable<AddressBooksRoute> { AddressBooks(navController, addressBookInnerNavController, hiltViewModel<AddressBooksViewModel>()) }
-                    composable<AddressBookRoute> { AddressBook(navController, addressBookInnerNavController, hiltViewModel<AddressBookViewModel>()) }
-                    composable<ContactRoute> { Contact(addressBookInnerNavController, hiltViewModel<ContactViewModel>()) }
-                    composable<GroupRoute> { Group(addressBookInnerNavController, hiltViewModel<GroupViewModel>()) }
+                    composable<AddressBooksRoute> {
+                        AddressBooks(
+                            navController,
+                            addressBookInnerNavController,
+                            hiltViewModel<AddressBooksViewModel>()
+                        )
+                    }
+                    composable<AddressBookRoute> {
+                        AddressBook(
+                            navController,
+                            addressBookInnerNavController,
+                            hiltViewModel<AddressBookViewModel>()
+                        )
+                    }
+                    composable<ContactRoute> {
+                        Contact(
+                            addressBookInnerNavController,
+                            hiltViewModel<ContactViewModel>()
+                        )
+                    }
+                    composable<GroupRoute> {
+                        Group(
+                            addressBookInnerNavController,
+                            hiltViewModel<GroupViewModel>()
+                        )
+                    }
                 }
             }
             composable<MainPage.Setting> {

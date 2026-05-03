@@ -20,7 +20,7 @@ import javax.inject.Inject
 class AddNewContactViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val contactsRepository: ContactsRepository,
-): ViewModel() {
+) : ViewModel() {
 
     val addContactRoute = savedStateHandle.toRoute<AddContactRoute>()
 
@@ -41,7 +41,7 @@ class AddNewContactViewModel @Inject constructor(
     fun loadData() {
         viewModelScope.launch {
             loading.value = true
-            val addressBook  = contactsRepository.getAddressBook(addContactRoute.addressBookUri)
+            val addressBook = contactsRepository.getAddressBook(addContactRoute.addressBookUri)
             notIncludedGroups.clear()
             includedGroups.clear()
             notIncludedGroups.addAll(addressBook?.groups ?: arrayListOf())
@@ -61,7 +61,7 @@ class AddNewContactViewModel @Inject constructor(
 
     fun addNewContact() {
         viewModelScope.launch {
-            if(fullName.value.isEmpty()) {
+            if (fullName.value.isEmpty()) {
                 errorMessages.value = "Name can not be empty."
             } else if (phoneNumberError.value) {
                 errorMessages.value = "Phone number format is wrong."
@@ -93,6 +93,7 @@ class AddNewContactViewModel @Inject constructor(
             emailError.value = false
         }
     }
+
     fun setPhoneNumber(number: String) {
         this.phoneNumber.value = number
         if (this.phoneNumber.value.isNotEmpty()) {

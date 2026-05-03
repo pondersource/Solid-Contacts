@@ -17,7 +17,7 @@ import javax.inject.Inject
 class GroupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val contactsRepository: ContactsRepository
-): ViewModel() {
+) : ViewModel() {
 
     val groupRoute = savedStateHandle.toRoute<GroupRoute>()
 
@@ -38,7 +38,8 @@ class GroupViewModel @Inject constructor(
     fun deleteGroup() {
         viewModelScope.launch {
             deleteLoading.value = true
-            val result = contactsRepository.deleteGroup(groupRoute.addressBookUri, groupDetails.value!!.uri)
+            val result =
+                contactsRepository.deleteGroup(groupRoute.addressBookUri, groupDetails.value!!.uri)
             if (result != null) {
                 deleteGroupResult.value = true
             }

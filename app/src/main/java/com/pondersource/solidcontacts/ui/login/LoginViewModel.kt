@@ -6,13 +6,15 @@ import com.pondersource.solidandroidclient.sdk.SolidException.SolidAppNotFoundEx
 import com.pondersource.solidandroidclient.sdk.SolidException.SolidNotLoggedInException
 import com.pondersource.solidandroidclient.sdk.SolidException.SolidServiceConnectionException
 import com.pondersource.solidandroidclient.sdk.SolidSignInClient
+import com.pondersource.solidcontacts.repository.user.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     val solidSignInClient: SolidSignInClient,
-): ViewModel() {
+    val userRepository: UserRepository,
+) : ViewModel() {
 
     val loginResult = mutableStateOf(false)
     val loginError = mutableStateOf("")

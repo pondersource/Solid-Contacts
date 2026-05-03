@@ -31,7 +31,7 @@ fun ContactItem(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
-            .clickable{onClick(contact)},
+            .clickable { onClick(contact) },
     ) {
         Row(
             modifier = Modifier
@@ -45,7 +45,7 @@ fun ContactItem(
                     .padding(12.dp)
             )
 
-            if(addable) {
+            if (addable) {
                 if (added) {
                     Icon(
                         painter = painterResource(R.drawable.ic_close),

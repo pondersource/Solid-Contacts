@@ -18,7 +18,7 @@ import javax.inject.Inject
 class AddNewGroupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val contactsRepository: ContactsRepository,
-): ViewModel() {
+) : ViewModel() {
 
     val addGroupRoute = savedStateHandle.toRoute<AddGroupRoute>()
 
@@ -34,7 +34,7 @@ class AddNewGroupViewModel @Inject constructor(
     fun loadData() {
         viewModelScope.launch {
             loading.value = true
-            val addressBook  = contactsRepository.getAddressBook(addGroupRoute.addressBookUri)
+            val addressBook = contactsRepository.getAddressBook(addGroupRoute.addressBookUri)
             notIncludedContacts.clear()
             includedContacts.clear()
             notIncludedContacts.addAll(addressBook?.contacts ?: arrayListOf())
@@ -54,7 +54,7 @@ class AddNewGroupViewModel @Inject constructor(
 
     fun addNewGroup() {
         viewModelScope.launch {
-            if(title.value.isEmpty()) {
+            if (title.value.isEmpty()) {
                 errorMessages.value = "Title cannot be empty."
             } else {
                 loading.value = true

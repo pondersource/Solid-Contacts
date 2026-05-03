@@ -18,7 +18,7 @@ fun DeleteDialog(
 ) {
 
     val title = remember {
-        when(type) {
+        when (type) {
             DeleteElementType.ADDRESS_BOOK -> "Delete Address Book"
             DeleteElementType.CONTACT -> "Delete Contact"
             DeleteElementType.GROUP -> "Delete Group"
@@ -26,7 +26,7 @@ fun DeleteDialog(
     }
 
     val message = remember {
-        when(type) {
+        when (type) {
             DeleteElementType.ADDRESS_BOOK -> "Are you sure you want to delete this address book?"
             DeleteElementType.CONTACT -> "Are you sure you want to delete this contact?"
             DeleteElementType.GROUP -> "Are you sure you want to delete this group?"

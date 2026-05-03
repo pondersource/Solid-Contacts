@@ -10,7 +10,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import com.pondersource.solidcontacts.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,7 +25,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -38,7 +36,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -211,7 +208,12 @@ fun AddressBook(
                                 viewModel.addressBookDetails.value!!.contacts,
                                 "You don't have any contact in this address book."
                             ) {
-                                innerNavController.navigate(ContactRoute(viewModel.addressBookRoute.addressBookUri, it.uri))
+                                innerNavController.navigate(
+                                    ContactRoute(
+                                        viewModel.addressBookRoute.addressBookUri,
+                                        it.uri
+                                    )
+                                )
                             }
                         }
 
@@ -266,7 +268,7 @@ fun ContactList(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-    ){
+    ) {
         if (contacts.isEmpty()) {
             item() {
                 Text(emptyText)
@@ -290,7 +292,7 @@ fun GroupList(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-    ){
+    ) {
         if (groups.isEmpty()) {
             item() {
                 Text("You don't have any group in this address book.")
@@ -329,7 +331,7 @@ private fun AddContactAndGroupFab(
     Column(
         modifier = Modifier,
         horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.spacedBy(16.dp,Alignment.Bottom)
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Bottom)
     ) {
         AddFabMenu(
             items = items,
@@ -384,7 +386,7 @@ private fun AddFabMenuItem(
     modifier: Modifier = Modifier
 ) {
 
-    Row (
+    Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically

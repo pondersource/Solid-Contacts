@@ -54,7 +54,7 @@ fun AddNewGroup(
     }
 
     LaunchedEffect(viewModel.errorMessages.value) {
-        if(!viewModel.errorMessages.value.isNullOrEmpty()) {
+        if (!viewModel.errorMessages.value.isNullOrEmpty()) {
             messageSnackBarHostState.showSnackbar(viewModel.errorMessages.value!!)
             viewModel.errorMessages.value = null
         }
@@ -73,9 +73,11 @@ fun AddNewGroup(
                         Icon(
                             painter = painterResource(R.drawable.ic_close),
                             contentDescription = null,
-                            modifier = Modifier.clickable {
-                                navController.popBackStack()
-                            }.padding(8.dp)
+                            modifier = Modifier
+                                .clickable {
+                                    navController.popBackStack()
+                                }
+                                .padding(8.dp)
                         )
                     },
                     actions = {
@@ -137,7 +139,7 @@ fun AddNewGroup(
                                 viewModel.includedContacts[it],
                                 true,
                                 true,
-                                {viewModel.excludeContact(it)}
+                                { viewModel.excludeContact(it) }
                             ) {}
                         }
                     }
@@ -162,7 +164,7 @@ fun AddNewGroup(
                                 viewModel.notIncludedContacts[it],
                                 true,
                                 false,
-                                {viewModel.includeContact(it)}
+                                { viewModel.includeContact(it) }
                             ) {}
                         }
                     }

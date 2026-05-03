@@ -1,6 +1,5 @@
 package com.pondersource.solidcontacts.ui.newcontact
 
-import com.pondersource.solidcontacts.R
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.pondersource.solidcontacts.R
 import com.pondersource.solidcontacts.ui.element.GroupItem
 import com.pondersource.solidcontacts.ui.element.LoadingItem
 
@@ -54,7 +54,7 @@ fun AddNewContact(
     }
 
     LaunchedEffect(viewModel.errorMessages.value) {
-        if(!viewModel.errorMessages.value.isNullOrEmpty()) {
+        if (!viewModel.errorMessages.value.isNullOrEmpty()) {
             messageSnackBarHostState.showSnackbar(viewModel.errorMessages.value!!)
             viewModel.errorMessages.value = null
         }
@@ -73,9 +73,11 @@ fun AddNewContact(
                         Icon(
                             painter = painterResource(R.drawable.ic_close),
                             contentDescription = null,
-                            modifier = Modifier.clickable {
-                                navController.popBackStack()
-                            }.padding(8.dp)
+                            modifier = Modifier
+                                .clickable {
+                                    navController.popBackStack()
+                                }
+                                .padding(8.dp)
                         )
                     },
                     actions = {
@@ -167,7 +169,7 @@ fun AddNewContact(
                                 viewModel.includedGroups[it],
                                 true,
                                 true,
-                                {viewModel.excludeGroup(it)}
+                                { viewModel.excludeGroup(it) }
                             ) {}
                         }
                     }
@@ -192,7 +194,7 @@ fun AddNewContact(
                                 viewModel.notIncludedGroups[it],
                                 true,
                                 false,
-                                {viewModel.includeGroup(it)}
+                                { viewModel.includeGroup(it) }
                             ) {}
                         }
                     }

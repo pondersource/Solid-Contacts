@@ -31,7 +31,7 @@ fun GroupItem(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
-            .clickable{onClick(group)},
+            .clickable { onClick(group) },
     ) {
         Row(
             modifier = Modifier
@@ -45,7 +45,7 @@ fun GroupItem(
                     .padding(12.dp)
             )
 
-            if(addable) {
+            if (addable) {
                 if (added) {
                     Icon(
                         painter = painterResource(R.drawable.ic_close),

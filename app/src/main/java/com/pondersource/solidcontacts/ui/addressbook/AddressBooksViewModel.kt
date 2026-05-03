@@ -14,15 +14,14 @@ import javax.inject.Inject
 @HiltViewModel
 class AddressBooksViewModel @Inject constructor(
     val contactsRepository: ContactsRepository,
-): ViewModel() {
+) : ViewModel() {
 
     val addressBooksLoadingState = mutableStateOf(false)
-    val privateAddressBooks : MutableState<List<AddressBook>?> = mutableStateOf(null)
-    val publicAddressBooks : MutableState<List<AddressBook>?> = mutableStateOf(null)
+    val privateAddressBooks: MutableState<List<AddressBook>?> = mutableStateOf(null)
+    val publicAddressBooks: MutableState<List<AddressBook>?> = mutableStateOf(null)
 
     val newAddressBookTitle = mutableStateOf("")
     val newAddressBookPrivate = mutableStateOf(true)
-
 
 
     fun loadData() {
@@ -39,7 +38,10 @@ class AddressBooksViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             addressBooksLoadingState.value = true
-            contactsRepository.createNewAddressBook(newAddressBookTitle.value, newAddressBookPrivate.value)
+            contactsRepository.createNewAddressBook(
+                newAddressBookTitle.value,
+                newAddressBookPrivate.value
+            )
             getAddressBooks()
         }
     }
@@ -51,10 +53,10 @@ class AddressBooksViewModel @Inject constructor(
         val localPrivateAddressBookList = arrayListOf<AddressBook>()
         val localPublicAddressBookList = arrayListOf<AddressBook>()
         addressBooks?.privateAddressBookUris?.forEach {
-            localPrivateAddressBookList.add(contactsRepository.getAddressBook(it)!!)
+            contactsRepository.getAddressBook(it)?.let { e -> localPrivateAddressBookList.add(e) }
         }
         addressBooks?.publicAddressBookUris?.forEach {
-            localPublicAddressBookList.add(contactsRepository.getAddressBook(it)!!)
+            contactsRepository.getAddressBook(it)?.let { e -> localPublicAddressBookList.add(e) }
         }
         privateAddressBooks.value = localPrivateAddressBookList
         publicAddressBooks.value = localPublicAddressBookList
