@@ -19,6 +19,8 @@ navigation = "2.8.4"
 kotlinXCoroutine = "1.9.0"
 kotlinXSerialization = "1.7.3"
 solidAndroidClient = "0.2.0"
+solidAndroidClient = "0.4.0"
+datasource = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,6 +62,8 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
 
 pondersource-solid-android-client = { group = "com.pondersource.solidandroidclient", name = "solidandroidclient", version.ref = "solidAndroidClient"}
+
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datasource" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

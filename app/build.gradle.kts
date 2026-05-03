@@ -113,4 +113,6 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
 
     implementation(libs.pondersource.solid.android.client)
+
+    implementation(libs.androidx.datastore.preferences)
 }

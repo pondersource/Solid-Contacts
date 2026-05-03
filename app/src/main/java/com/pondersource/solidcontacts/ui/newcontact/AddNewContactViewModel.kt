@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.pondersource.shared.data.datamodule.contact.FullContact
-import com.pondersource.shared.data.datamodule.contact.Group
+import com.pondersource.shared.domain.datamodule.contact.FullContact
+import com.pondersource.shared.domain.datamodule.contact.Group
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
 import com.pondersource.solidcontacts.ui.nav.AddContactRoute
 import com.pondersource.solidcontacts.util.isEmailValid
@@ -72,8 +72,8 @@ class AddNewContactViewModel @Inject constructor(
                 val result = contactsRepository.createContact(
                     addContactRoute.addressBookUri,
                     fullName.value,
-                    phoneNumber.value,
                     email.value,
+                    phoneNumber.value,
                     includedGroups.map { it.uri },
                 )
                 addContactResult.value = result

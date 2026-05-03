@@ -19,9 +19,10 @@ class LoginViewModel @Inject constructor(
 
     fun requestLogin() {
         try {
-            solidSignInClient.requestLogin { granted, exception ->
+            solidSignInClient.requestLogin { webid, exception ->
                 if (exception == null) {
-                    if (granted == true) {
+                    if (!webid.isNullOrEmpty()) {
+                        userRepository.setGrantedWebId(webid)
                         loginResult.value = true
                     } else {
                         loginResult.value = false

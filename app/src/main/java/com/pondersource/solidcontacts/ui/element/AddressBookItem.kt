@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pondersource.shared.data.datamodule.contact.AddressBook
+import com.pondersource.shared.domain.datamodule.contact.AddressBook
 
 @Composable
 fun AddressBookItem(

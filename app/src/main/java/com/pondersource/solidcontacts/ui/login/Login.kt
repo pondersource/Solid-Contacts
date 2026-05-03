@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
-import com.pondersource.solidandroidclient.sdk.ui.SignInButton
+import com.pondersource.solidandroidclient.ui.SignInButton
 import com.pondersource.solidcontacts.ui.nav.MainPage
 
 @Composable
@@ -55,14 +55,9 @@ fun Login(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AndroidView(
-                { context -> SignInButton(context).apply {
-                        setOnClickListener{
-                            viewModel.requestLogin()
-                        }
-                    }
-                }
-            )
+            SignInButton(onClick = {
+                viewModel.requestLogin()
+            })
         }
     }
 }
