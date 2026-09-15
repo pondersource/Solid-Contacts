@@ -1,12 +1,13 @@
 package com.pondersource.solidcontacts.repository.contacts
 
-import android.util.Log
-import com.pondersource.shared.domain.datamodule.contact.AddressBook
-import com.pondersource.shared.domain.datamodule.contact.AddressBookList
-import com.pondersource.shared.domain.datamodule.contact.FullContact
-import com.pondersource.shared.domain.datamodule.contact.FullGroup
-import com.pondersource.shared.domain.datamodule.contact.NewContact
-import com.pondersource.solidandroidclient.sdk.SolidContactsDataModule
+import com.erfangholami.androidsolidservices.client.sdk.SolidContactsDataModule
+import com.erfangholami.androidsolidservices.shared.model.contacts.AddressBook
+import com.erfangholami.androidsolidservices.shared.model.contacts.AddressBookList
+import com.erfangholami.androidsolidservices.shared.model.contacts.EmailType
+import com.erfangholami.androidsolidservices.shared.model.contacts.FullGroup
+import com.erfangholami.androidsolidservices.shared.model.contacts.PhoneType
+import com.erfangholami.androidsolidservices.shared.model.contacts.SolidContact
+import com.erfangholami.androidsolidservices.shared.model.contacts.contactData
 import com.pondersource.solidcontacts.repository.user.UserRepository
 import kotlinx.coroutines.flow.Flow
 
@@ -20,37 +21,35 @@ class ContactsRepositoryImplementation(
     }
 
     override suspend fun getAddressBooks(): AddressBookList? {
-        try {
-            return contactDataModule.getAddressBooks(userRepository.getGrantedWebId())
-        } catch (e: Exception) {
-            Log.d("TAG", "service is not connected")
-            return null
-        }
+        return runCatching {
+            contactDataModule.books.list(userRepository.getGrantedWebId())
+        }.getOrNull()
     }
 
     override suspend fun createNewAddressBook(name: String, isPrivate: Boolean): AddressBook? {
-        return contactDataModule.createAddressBook(
-            userRepository.getGrantedWebId(),
+        return contactDataModule.books.create(
+            webId = userRepository.getGrantedWebId(),
             title = name,
-            isPrivate = isPrivate
+            isPrivate = isPrivate,
         )
     }
 
     override suspend fun getAddressBook(addressBookUri: String): AddressBook? {
-        return contactDataModule.getAddressBook(
+        return contactDataModule.books.get(
             webId = userRepository.getGrantedWebId(),
-            addressBookUri
+            addressBookUri = addressBookUri,
         )
     }
 
     override suspend fun deleteAddressBook(addressBookUri: String): AddressBook? {
-        return contactDataModule.deleteAddressBook(
+        return contactDataModule.books.delete(
             webId = userRepository.getGrantedWebId(),
-            addressBookUri)
+            addressBookUri = addressBookUri,
+        )
     }
 
-    override suspend fun getContact(contactUri: String): FullContact? {
-        return contactDataModule.getContact(userRepository.getGrantedWebId(), contactUri)
+    override suspend fun getContact(contactUri: String): SolidContact? {
+        return contactDataModule.contacts.get(userRepository.getGrantedWebId(), contactUri)
     }
 
     override suspend fun createContact(
@@ -59,13 +58,26 @@ class ContactsRepositoryImplementation(
         email: String,
         phone: String,
         groups: List<String>
-    ): FullContact? {
-        val newContact = NewContact(name, email, phone)
-        return contactDataModule.createNewContact(userRepository.getGrantedWebId(), addressBookUri, newContact, groups)
+    ): SolidContact? {
+        val data = contactData {
+            fullName = name
+            email(email, EmailType.HOME)
+            phone(phone, PhoneType.CELL)
+        }
+        return contactDataModule.contacts.create(
+            webId = userRepository.getGrantedWebId(),
+            addressBookUri = addressBookUri,
+            data = data,
+            groupUris = groups,
+        )
     }
 
-    override suspend fun deleteContact(addressBookUri: String, contactUri: String): FullContact? {
-        return contactDataModule.deleteContact(userRepository.getGrantedWebId(), addressBookUri, contactUri)
+    override suspend fun deleteContact(addressBookUri: String, contactUri: String): SolidContact? {
+        return contactDataModule.contacts.delete(
+            userRepository.getGrantedWebId(),
+            addressBookUri,
+            contactUri,
+        )
     }
 
     override suspend fun createGroup(
@@ -73,22 +85,23 @@ class ContactsRepositoryImplementation(
         title: String,
         contacts: List<String>
     ): FullGroup? {
-        return contactDataModule.createNewGroup(
-            userRepository.getGrantedWebId(),
-            addressBookUri,
-            title,
-            contacts
+        return contactDataModule.groups.create(
+            webId = userRepository.getGrantedWebId(),
+            addressBookUri = addressBookUri,
+            title = title,
+            contactUris = contacts,
         )
     }
 
     override suspend fun getGroup(groupUri: String): FullGroup? {
-        return contactDataModule.getGroup(
-            userRepository.getGrantedWebId(),
-            groupUri
-        )
+        return contactDataModule.groups.get(userRepository.getGrantedWebId(), groupUri)
     }
 
     override suspend fun deleteGroup(addressBookUri: String, groupUri: String): FullGroup? {
-        return contactDataModule.deleteGroup(userRepository.getGrantedWebId(), addressBookUri, groupUri)
+        return contactDataModule.groups.delete(
+            userRepository.getGrantedWebId(),
+            addressBookUri,
+            groupUri,
+        )
     }
 }

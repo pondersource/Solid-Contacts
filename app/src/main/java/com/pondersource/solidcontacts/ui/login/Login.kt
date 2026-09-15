@@ -1,5 +1,6 @@
 package com.pondersource.solidcontacts.ui.login
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,8 +13,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.pondersource.solidandroidclient.ui.SignInButton
+import com.erfangholami.androidsolidservices.client.sdk.AuthorizeWithSolid
+import com.erfangholami.androidsolidservices.client.sdk.Solid
+import com.erfangholami.androidsolidservices.client.sdk.SolidSignInResult
+import com.erfangholami.androidsolidservices.client.ui.SignInButton
 import com.pondersource.solidcontacts.ui.nav.MainPage
 
 @Composable
@@ -22,7 +27,18 @@ fun Login(
     viewModel: LoginViewModel
 ) {
 
+    val context = LocalContext.current
     val snackBarHostState = remember { SnackbarHostState() }
+
+    val authorize = rememberLauncherForActivityResult(
+        AuthorizeWithSolid(viewModel.accessRequest)
+    ) { result ->
+        when (result) {
+            is SolidSignInResult.Authorized -> viewModel.onAuthorized(result.webId)
+            is SolidSignInResult.Failed -> viewModel.onFailed(result.exception.message.orEmpty())
+            SolidSignInResult.Dismissed -> Unit
+        }
+    }
 
     LaunchedEffect(viewModel.loginResult.value) {
         if (viewModel.loginResult.value == true) {
@@ -55,7 +71,11 @@ fun Login(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SignInButton(onClick = {
-                viewModel.requestLogin()
+                if (Solid.isHostInstalled(context)) {
+                    authorize.launch(Unit)
+                } else {
+                    context.startActivity(Solid.hostInstallIntent(context))
+                }
             })
         }
     }

@@ -1,9 +1,9 @@
 package com.pondersource.solidcontacts.repository.contacts
 
-import com.pondersource.shared.domain.datamodule.contact.AddressBook
-import com.pondersource.shared.domain.datamodule.contact.AddressBookList
-import com.pondersource.shared.domain.datamodule.contact.FullContact
-import com.pondersource.shared.domain.datamodule.contact.FullGroup
+import com.erfangholami.androidsolidservices.shared.model.contacts.AddressBook
+import com.erfangholami.androidsolidservices.shared.model.contacts.AddressBookList
+import com.erfangholami.androidsolidservices.shared.model.contacts.FullGroup
+import com.erfangholami.androidsolidservices.shared.model.contacts.SolidContact
 import kotlinx.coroutines.flow.Flow
 
 interface ContactsRepository {
@@ -18,7 +18,7 @@ interface ContactsRepository {
 
     suspend fun deleteAddressBook(addressBookUri: String): AddressBook?
 
-    suspend fun getContact(contactUri: String): FullContact?
+    suspend fun getContact(contactUri: String): SolidContact?
 
     suspend fun createContact(
         addressBookUri: String,
@@ -26,12 +26,12 @@ interface ContactsRepository {
         email: String,
         phone: String,
         groups: List<String>
-    ): FullContact?
+    ): SolidContact?
 
     suspend fun deleteContact(
         addressBookUri: String,
         contactUri: String,
-    ): FullContact?
+    ): SolidContact?
 
     suspend fun createGroup(
         addressBookUri: String,

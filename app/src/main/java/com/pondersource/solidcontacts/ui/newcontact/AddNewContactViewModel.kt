@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.pondersource.shared.domain.datamodule.contact.FullContact
-import com.pondersource.shared.domain.datamodule.contact.Group
+import com.erfangholami.androidsolidservices.shared.model.contacts.SolidContact
+import com.erfangholami.androidsolidservices.shared.model.contacts.Group
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
 import com.pondersource.solidcontacts.ui.nav.AddContactRoute
 import com.pondersource.solidcontacts.util.isEmailValid
@@ -35,7 +35,7 @@ class AddNewContactViewModel @Inject constructor(
     val notIncludedGroups = mutableStateListOf<Group>()
 
     val loading = mutableStateOf(false)
-    val addContactResult = mutableStateOf<FullContact?>(null)
+    val addContactResult = mutableStateOf<SolidContact?>(null)
     val errorMessages = mutableStateOf<String?>(null)
 
     fun loadData() {

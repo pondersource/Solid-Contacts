@@ -39,7 +39,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import com.pondersource.shared.domain.datamodule.contact.AddressBook
+import com.erfangholami.androidsolidservices.shared.model.contacts.AddressBook
 import com.pondersource.solidcontacts.R
 import com.pondersource.solidcontacts.ui.element.AddressBookItem
 import com.pondersource.solidcontacts.ui.element.LoadingItem

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.pondersource.solidandroidclient.sdk.SolidContactsDataModule
+import com.erfangholami.androidsolidservices.client.sdk.SolidContactsDataModule
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepositoryImplementation
 import com.pondersource.solidcontacts.repository.user.UserRepository

@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.pondersource.shared.domain.datamodule.contact.Contact
-import com.pondersource.shared.domain.datamodule.contact.FullGroup
+import com.erfangholami.androidsolidservices.shared.model.contacts.Contact
+import com.erfangholami.androidsolidservices.shared.model.contacts.FullGroup
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
 import com.pondersource.solidcontacts.ui.nav.AddGroupRoute
 import dagger.hilt.android.lifecycle.HiltViewModel

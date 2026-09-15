@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.pondersource.shared.domain.datamodule.contact.Group
+import com.erfangholami.androidsolidservices.shared.model.contacts.Group
 import com.pondersource.solidcontacts.R
 
 @Composable

@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.pondersource.shared.domain.datamodule.contact.AddressBook
+import com.erfangholami.androidsolidservices.shared.model.contacts.AddressBook
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
 import com.pondersource.solidcontacts.ui.nav.AddressBookRoute
 import dagger.hilt.android.lifecycle.HiltViewModel

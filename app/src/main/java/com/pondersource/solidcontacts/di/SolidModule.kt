@@ -1,10 +1,10 @@
 package com.pondersource.solidcontacts.di
 
 import android.content.Context
-import com.pondersource.solidandroidclient.sdk.Solid
-import com.pondersource.solidandroidclient.sdk.SolidContactsDataModule
-import com.pondersource.solidandroidclient.sdk.SolidResourceClient
-import com.pondersource.solidandroidclient.sdk.SolidSignInClient
+import com.erfangholami.androidsolidservices.client.sdk.Solid
+import com.erfangholami.androidsolidservices.client.sdk.SolidContactsDataModule
+import com.erfangholami.androidsolidservices.client.sdk.SolidResourceClient
+import com.erfangholami.androidsolidservices.client.sdk.SolidSignInClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

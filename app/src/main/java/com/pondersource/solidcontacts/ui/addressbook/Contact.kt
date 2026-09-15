@@ -100,21 +100,21 @@ fun Contact(
                 item {
                     Text(viewModel.contactDetails.value!!.fullName)
                 }
-                if (viewModel.contactDetails.value!!.phoneNumbers.isNotEmpty()) {
+                if (viewModel.contactDetails.value!!.data.phones.isNotEmpty()) {
                     item {
-                        Text(if (viewModel.contactDetails.value!!.phoneNumbers.size == 1) "Phone Number" else "Phone Numbers")
+                        Text(if (viewModel.contactDetails.value!!.data.phones.size == 1) "Phone Number" else "Phone Numbers")
                     }
-                    items(viewModel.contactDetails.value!!.phoneNumbers) {
-                        Text(it.value)
+                    items(viewModel.contactDetails.value!!.data.phones) {
+                        Text(it.number)
                     }
                 }
 
-                if (viewModel.contactDetails.value!!.emailAddresses.isNotEmpty()) {
+                if (viewModel.contactDetails.value!!.data.emails.isNotEmpty()) {
                     item {
-                        Text(if (viewModel.contactDetails.value!!.emailAddresses.size == 1) "Email Address" else "Email Addresses")
+                        Text(if (viewModel.contactDetails.value!!.data.emails.size == 1) "Email Address" else "Email Addresses")
                     }
-                    items(viewModel.contactDetails.value!!.emailAddresses) {
-                        Text(it.value)
+                    items(viewModel.contactDetails.value!!.data.emails) {
+                        Text(it.address)
                     }
                 }
             }

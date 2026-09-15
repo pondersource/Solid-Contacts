@@ -2,9 +2,11 @@ package com.pondersource.solidcontacts.ui.setting
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.pondersource.solidandroidclient.sdk.SolidSignInClient
+import androidx.lifecycle.viewModelScope
+import com.erfangholami.androidsolidservices.client.sdk.SolidSignInClient
 import com.pondersource.solidcontacts.repository.user.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,17 +20,18 @@ class SettingsViewModel @Inject constructor(
     val disconnectionError = mutableStateOf("")
 
     fun disconnectFromSolid() {
-        disconnectionLoadingState.value = true
-        solidSignInClient.disconnectFromSolid(userRepository.getGrantedWebId()) { result ->
+        viewModelScope.launch {
+            disconnectionLoadingState.value = true
+            val result = runCatching {
+                solidSignInClient.disconnectFromSolid(userRepository.getGrantedWebId())
+            }.getOrDefault(false)
+            disconnectionLoadingState.value = false
             if (result) {
-                disconnectionLoadingState.value = false
                 disconnectionResult.value = true
                 userRepository.setGrantedWebId("")
             } else {
-                disconnectionLoadingState.value = false
                 disconnectionResult.value = false
                 disconnectionError.value = "Disconnect from Solid failed."
-
             }
         }
     }

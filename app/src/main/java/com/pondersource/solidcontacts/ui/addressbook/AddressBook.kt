@@ -49,8 +49,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.pondersource.shared.domain.datamodule.contact.Contact
-import com.pondersource.shared.domain.datamodule.contact.Group
+import com.erfangholami.androidsolidservices.shared.model.contacts.Contact
+import com.erfangholami.androidsolidservices.shared.model.contacts.Group
 import com.pondersource.solidcontacts.R
 import com.pondersource.solidcontacts.ui.element.ContactItem
 import com.pondersource.solidcontacts.ui.element.DeleteDialog

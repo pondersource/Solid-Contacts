@@ -18,7 +18,7 @@ ksp = "2.3.5"
 navigation = "2.9.8"
 kotlinXCoroutine = "1.9.0"
 kotlinXSerialization = "1.11.0"
-solidAndroidClient = "0.4.0"
+ass = "0.8.0"
 datasource = "1.2.1"
 
 [libraries]
@@ -61,7 +61,7 @@ androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navi
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
-pondersource-solid-android-client = { group = "com.pondersource.solidandroidclient", name = "solidandroidclient", version.ref = "solidAndroidClient" }
+ass-client = { group = "com.erfangholami.androidsolidservices", name = "client", version.ref = "ass" }
 
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datasource" }
 

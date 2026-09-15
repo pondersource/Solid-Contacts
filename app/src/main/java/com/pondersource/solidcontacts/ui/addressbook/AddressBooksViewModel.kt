@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pondersource.shared.domain.datamodule.contact.AddressBook
+import com.erfangholami.androidsolidservices.shared.model.contacts.AddressBook
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.pondersource.shared.domain.datamodule.contact.FullContact
+import com.erfangholami.androidsolidservices.shared.model.contacts.SolidContact
 import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
 import com.pondersource.solidcontacts.ui.nav.ContactRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ class ContactViewModel @Inject constructor(
     val contactRoute = savedStateHandle.toRoute<ContactRoute>()
 
     val loadingContactDetails = mutableStateOf(true)
-    val contactDetails: MutableState<FullContact?> = mutableStateOf(null)
+    val contactDetails: MutableState<SolidContact?> = mutableStateOf(null)
 
     val deleteLoading = mutableStateOf(false)
     val deleteContactResult = mutableStateOf(false)

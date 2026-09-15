@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pondersource.solidandroidclient.sdk.SolidSignInClient
+import com.erfangholami.androidsolidservices.client.sdk.SolidSignInClient
 import com.pondersource.solidcontacts.repository.user.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -31,18 +31,17 @@ class StartupViewModel @Inject constructor(
         }
     }
 
-    private fun hasLoggedIn(): Boolean {
+    private suspend fun hasLoggedIn(): Boolean {
         return try {
-            val grantedWenId = userRepository.getGrantedWebId()
-            if(grantedWenId.isEmpty()) {
+            val grantedWebId = userRepository.getGrantedWebId()
+            if (grantedWebId.isEmpty()) {
                 false
             } else {
-                solidSignInClient.getAccount(grantedWenId) != null
+                solidSignInClient.getAccount(grantedWebId) != null
             }
         } catch (e: Exception) {
             false
         }
-        return false
     }
 
 }

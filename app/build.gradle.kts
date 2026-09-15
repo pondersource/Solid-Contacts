@@ -108,7 +108,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.androidx.hilt.compiler)
 
-    implementation(libs.pondersource.solid.android.client)
+    implementation(libs.ass.client)
 
     implementation(libs.androidx.datastore.preferences)
 }
