@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.pondersource.solidcontacts"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.pondersource.solidcontacts"
