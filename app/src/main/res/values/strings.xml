@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Solid Contacts</string>
-    <string name="home">Home</string>
-    <string name="setting">Settings</string>
+
+    <string name="error_host_missing">Solid Share is not installed. Install it to reach your pod.</string>
+    <string name="error_host_unreachable">Cannot reach Solid Share right now. Try again in a moment.</string>
+    <string name="error_not_signed_in">Connect a Solid account to continue.</string>
+    <string name="error_not_permitted">Your pod refused this change. Check what you granted this app.</string>
+    <string name="error_offline">You are offline. Your changes are saved and will sync later.</string>
+    <string name="error_unknown">Something went wrong.</string>
 </resources>
