@@ -14,9 +14,9 @@ android {
     defaultConfig {
         applicationId = "com.pondersource.solidcontacts"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "0.1.0"
+        targetSdk = 36
+        versionCode = 2
+        versionName = "1.0.0"
         manifestPlaceholders["appAuthRedirectScheme"] = namespace.toString()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,6 +61,11 @@ android {
 
 kotlin {
     jvmToolchain(17)
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
 }
 
 composeCompiler {
@@ -111,4 +116,16 @@ dependencies {
     implementation(libs.ass.client)
 
     implementation(libs.androidx.datastore.preferences)
+
+    //Room - the offline cache the whole UI reads from
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    //WorkManager - drains the outbox and refreshes from the pod in the background
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+
+    implementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
