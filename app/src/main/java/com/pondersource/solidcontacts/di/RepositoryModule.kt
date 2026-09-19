@@ -1,54 +1,24 @@
 package com.pondersource.solidcontacts.di
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import com.erfangholami.androidsolidservices.client.sdk.SolidContactsDataModule
-import com.pondersource.solidcontacts.repository.contacts.ContactsRepository
-import com.pondersource.solidcontacts.repository.contacts.ContactsRepositoryImplementation
-import com.pondersource.solidcontacts.repository.user.UserRepository
-import com.pondersource.solidcontacts.repository.user.UserRepositoryImplementation
+import com.pondersource.solidcontacts.data.repository.AccountRepository
+import com.pondersource.solidcontacts.data.repository.AccountRepositoryImpl
+import com.pondersource.solidcontacts.data.repository.ContactsRepository
+import com.pondersource.solidcontacts.data.repository.ContactsRepositoryImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RepositoryModule {
+abstract class RepositoryModule {
 
-    companion object {
-        private const val PREFERENCES_NAME = "com.pondersource.solidcontacts.preferences"
-    }
-
-    private val Context.preferencesDataStore: DataStore<Preferences> by preferencesDataStore(
-        PREFERENCES_NAME
-    )
-
-    @Provides
+    @Binds
     @Singleton
-    fun providePreferencesDatasource(
-        @ApplicationContext context: Context
-    ): DataStore<Preferences> = context.preferencesDataStore
+    abstract fun bindContactsRepository(impl: ContactsRepositoryImpl): ContactsRepository
 
-
-    @Provides
+    @Binds
     @Singleton
-    fun providesContactsRepository(
-        contactsDataModule: SolidContactsDataModule,
-        userRepository: UserRepository,
-    ): ContactsRepository {
-        return ContactsRepositoryImplementation(contactsDataModule, userRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun providesUserRepository(
-        dataStore: DataStore<Preferences>
-    ): UserRepository {
-        return UserRepositoryImplementation(dataStore)
-    }
+    abstract fun bindAccountRepository(impl: AccountRepositoryImpl): AccountRepository
 }
